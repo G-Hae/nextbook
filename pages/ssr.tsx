@@ -1,12 +1,12 @@
-import { GetStaticProps, NextPage } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 
-type SSGProps = {
+type SSRProps = {
     message: string;
 };
 
-const SSG: NextPage<SSGProps> = (props) => {
+const SSR: NextPage<SSRProps> = (props) => {
     const { message } = props;
     return (
         <div>
@@ -15,16 +15,16 @@ const SSG: NextPage<SSGProps> = (props) => {
                 <Link rel="icon" href="/favicon.ico" />
             </Head>
             <main>
-                <p>이 페이지는 정적 사이트 생성을 통해 빌드 시 생성된 페이지입니다.</p>
+                <p>이 페이지는 서버 사이드 랜더링을 통해 접근 시에 서버에서 그려진 페이지입니다.</p>
                 <p>{message}</p>
             </main>
         </div>
     );
 };
 
-export const getStaticProps: GetStaticProps<SSGProps> = async (context) => {
+export const getServerSideProps: GetServerSideProps<SSRProps> = async (context) => {
     const timestamp = new Date().toLocaleString();
-    const message = `${timestamp}에 getStaticProps가 실행됐습니다.`;
+    const message = `${timestamp}에GetServerSideProps가 실행됐습니다.`;
     console.log(message, context);
     return {
         props: {
@@ -33,4 +33,4 @@ export const getStaticProps: GetStaticProps<SSGProps> = async (context) => {
     };
 };
 
-export default SSG;
+export default SSR;
